@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Best9Instagram.MainPage">
+             x:Class="Best9Instagram.MainPage" 
+             x:Name="ContentPage"
+             NavigationPage.HasNavigationBar="False">
 
     <StackLayout>
         <Grid>
@@ -23,12 +25,14 @@
             <Button Grid.Row="1" Grid.Column="2" Text="Log in" Clicked="LogIn_Clicked" x:Name="LoginButton"/>
             <Picker Grid.Row="2" Grid.Column="0" Title="Grid Background Color" SelectedIndexChanged="GridBackgroundColor_SelectedIndexChanged" x:Name="GridBackgroundColor"/>
             <Picker Grid.Row="2" Grid.Column="1" Title="Image Background Color" SelectedIndexChanged="ImageBackgroundColor_SelectedIndexChanged" x:Name="ImageBackgroundColor"/>
+            <Button Grid.Row="2" Grid.Column="2" Clicked="SaveImage_Clicked" 
+                    Text="Save Image" x:Name="SaveButton"/>
             <StackLayout Grid.Row="3" Grid.ColumnSpan="3">
-                <Grid Padding="10" x:Name="GridImages">
+                <Grid x:Name="GridImages">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="200"/>
-                        <RowDefinition Height="200"/>
-                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

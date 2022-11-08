@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using System.Reflection;
 using System.Collections.Generic;
 using InstagramApiSharp.API;
 using InstagramApiSharp.API.Builder;
 using InstagramApiSharp.Classes;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace Best9Instagram
 {
@@ -129,7 +131,7 @@ namespace Best9Instagram
                         uri = media.Videos[0].Uri;
                         break;
                 }
-                int size = 190;
+                int size = 200;
                 Image image = new Image
                 {
                     Source = uri,
@@ -164,11 +166,12 @@ namespace Best9Instagram
                 int size = 190;
                 _images.Add(new Image
                 {
-                    Source = "",
+                    Source = ImageSource.FromResource($"Best9Instagram.pic{i}.jpg"),
                     BackgroundColor = ConvertStringToColor(ImageBackgroundColor.SelectedItem.ToString()),
                     WidthRequest = size,
                     HeightRequest = size,
-                    Aspect = Aspect.AspectFit
+                    Aspect = Aspect.AspectFit,
+                    Margin = new Thickness(0, -70, 0, 0)
                 });
                 column++;
                 if (i % 3 == 0)
@@ -197,6 +200,46 @@ namespace Best9Instagram
         private void GridBackgroundColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridImages.BackgroundColor = ConvertStringToColor(GridBackgroundColor.SelectedItem.ToString());
+        }
+
+        private async void SaveImage_Clicked(object sender, EventArgs e)
+        {
+            if (!Screenshot.IsCaptureSupported)
+                return;
+            
+            EnableGui(false);
+
+            for(int i = 0; i < _images.Count; i++)
+            {
+                _images[i].HeightRequest =
+                    _images[i].WidthRequest = 250;
+            }
+
+            ContentPage.BackgroundColor = 
+                ConvertStringToColor(GridBackgroundColor.BackgroundColor.ToString());
+
+            var screenshot = await Screenshot.CaptureAsync();
+            var stream = await screenshot.OpenReadAsync();
+
+            //Thread.Sleep(1000);
+            //EnableGui(true);
+            //GridImages.Children.Clear();
+            //GridImages.Children.Add(new Image { Source = ImageSource.FromStream(() => stream) });
+
+            //ContentPage.BackgroundColor = Color.White;
+        }
+
+        private void EnableGui(bool enable)
+        {
+            Status.IsVisible =
+                Username.IsVisible=
+                Password.IsVisible =
+                LoginButton.IsVisible =
+                GridBackgroundColor.IsVisible =
+                ImageBackgroundColor.IsVisible =
+                SaveButton.IsVisible = enable;
+
+            NavigationPage.SetHasNavigationBar(this, enable);
         }
     }
 }
