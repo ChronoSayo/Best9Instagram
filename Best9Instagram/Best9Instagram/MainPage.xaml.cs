@@ -163,16 +163,19 @@ namespace Best9Instagram
             int row = -1, column = -1;
             for (int i = 0; i < 9; i++)
             {
-                int size = 190;
-                _images.Add(new Image
+                int size = 200;
+                int marginHorizontal = -3;
+                int marginVertical = -15;
+                var image = new Image
                 {
                     Source = ImageSource.FromResource($"Best9Instagram.pic{i}.jpg"),
                     BackgroundColor = ConvertStringToColor(ImageBackgroundColor.SelectedItem.ToString()),
-                    WidthRequest = size,
-                    HeightRequest = size,
                     Aspect = Aspect.AspectFit,
-                    Margin = new Thickness(0, -70, 0, 0)
-                });
+                    Margin = row > 1 ? new Thickness(marginHorizontal, marginVertical) : 0
+                };
+                image.HeightRequest = size;
+                _images.Add(image);
+
                 column++;
                 if (i % 3 == 0)
                     column = 0;
