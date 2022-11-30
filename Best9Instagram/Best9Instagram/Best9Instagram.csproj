@@ -11,48 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="pic0.jpg" />
-    <None Remove="pic1.jpg" />
-    <None Remove="pic2.jpg" />
-    <None Remove="pic3.jpg" />
-    <None Remove="pic4.jpg" />
-    <None Remove="pic5.jpg" />
-    <None Remove="pic6.jpg" />
-    <None Remove="pic7.jpg" />
-    <None Remove="pic8.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="pic0.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pic1.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pic2.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pic3.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pic4.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pic5.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pic6.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pic7.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pic8.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="ImageFromXamarinUI" Version="1.0.0" />
     <PackageReference Include="InstagramApiSharp" Version="1.7.4" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />

@@ -5,6 +5,7 @@ using InstagramApiSharp.API;
 using InstagramApiSharp.API.Builder;
 using InstagramApiSharp.Classes;
 using Xamarin.Forms;
+using ImageFromXamarinUI;
 
 namespace Best9Instagram
 {
@@ -30,12 +31,7 @@ namespace Best9Instagram
             {
                 if (field == null || string.IsNullOrEmpty(field.Name))
                     continue;
-
-                GridBackgroundColor.Items.Add(field.Name);
-                ImageBackgroundColor.Items.Add(field.Name);
             }
-            GridBackgroundColor.SelectedItem = Color.White;
-            ImageBackgroundColor.SelectedItem = Color.Black;
             _images = new List<Image>();
             SetGridImages();
         }
@@ -66,6 +62,22 @@ namespace Best9Instagram
             StatusText = "Logged in.";
 
             SearchUserMedia();
+        }
+
+        private void Update_Clicked(object sender, EventArgs e)
+        {
+            SetGridImages();
+        }
+
+        private async void Screenshot_Clicked(object sender, EventArgs e)
+        {
+            var stream = await StackLayoutImages.CaptureImageAsync();
+            var image = new Image
+            {
+                Source = ImageSource.FromStream(() => stream)
+            };
+            GridImages.Children.Clear();
+            GridImages.Children.Add(image);
         }
 
         private async void SearchUserMedia()
@@ -151,24 +163,18 @@ namespace Best9Instagram
             StatusText = "Done";
         }
 
-        private void Update_Clicked(object sender, EventArgs e)
-        {
-            SetGridImages();
-        }
-
         private void SetGridImages()
         {
             int row = -1, column = -1;
             for (int i = 0; i < 9; i++)
             {
-                int size = 190;
+                int size = 161;
                 _images.Add(new Image
                 {
-                    Source = "",
-                    BackgroundColor = ConvertStringToColor(ImageBackgroundColor.SelectedItem.ToString()),
+                    Source = Debug ? ImageSource.FromFile($"pic{i}.jpg") : "",
                     WidthRequest = size,
                     HeightRequest = size,
-                    Aspect = Aspect.AspectFit
+                    Aspect = Aspect.AspectFill,
                 });
                 column++;
                 if (i % 3 == 0)
@@ -180,23 +186,6 @@ namespace Best9Instagram
                 }
                 GridImages.Children.Add(_images[i], column, row);
             }
-        }
-
-        private Color ConvertStringToColor(string colorName)
-        {
-            var color = System.Drawing.Color.FromName(colorName);
-            return Color.FromRgb(color.R, color.G, color.B); 
-        }
-
-        private void ImageBackgroundColor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach (Image image in _images)
-                image.BackgroundColor = ConvertStringToColor(ImageBackgroundColor.SelectedItem.ToString());
-        }
-
-        private void GridBackgroundColor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridImages.BackgroundColor = ConvertStringToColor(GridBackgroundColor.SelectedItem.ToString());
         }
     }
 }
