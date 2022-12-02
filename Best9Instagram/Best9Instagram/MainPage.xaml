@@ -20,7 +20,7 @@
             <Entry Grid.Row="1" x:Name="Username"/>
             <Entry Grid.Row="1" Grid.Column="1" IsPassword="True" Text="" x:Name="Password"/>
             <Button Grid.Row="1" Grid.Column="2" Text="Log in" Clicked="LogIn_Clicked" x:Name="LoginButton"/>
-            <Button Grid.Row="2" Grid.ColumnSpan="3" Text="Screenshot" Clicked="Screenshot_Clicked"/>
+            <Button Grid.Row="2" Grid.ColumnSpan="3" Text="Save" Clicked="Screenshot_Clicked"/>
             <StackLayout Grid.Row="3" Grid.ColumnSpan="3" x:Name="StackLayoutImages">
                 <Grid RowSpacing="0" ColumnSpacing="0" x:Name="GridImages">
                     <Grid.RowDefinitions>

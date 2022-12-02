@@ -6,6 +6,8 @@ using InstagramApiSharp.API.Builder;
 using InstagramApiSharp.Classes;
 using Xamarin.Forms;
 using ImageFromXamarinUI;
+using System.IO;
+using Xamarin.Essentials;
 
 namespace Best9Instagram
 {
@@ -76,8 +78,28 @@ namespace Best9Instagram
             {
                 Source = ImageSource.FromStream(() => stream)
             };
-            GridImages.Children.Clear();
-            GridImages.Children.Add(image);
+
+            var path = FileSystem.AppDataDirectory;
+            path = Path.Combine(path, "Best9Instagram");
+            Directory.CreateDirectory(path);
+
+            var file = Path.Combine(path, "Best9Instagram");
+
+            byte[] bytes = new byte[stream.Length];
+            using(FileStream fs = new FileStream(file, FileMode.OpenOrCreate))
+            {
+                using(stream)
+                {
+                    stream.Read(bytes, 0, (int)stream.Length);
+                }
+                int length = bytes.Length;
+                await fs.WriteAsync(bytes, 0, length);
+            }
+
+            string result = await DisplayPromptAsync("Saving...", "Name your picture:");
+            path = DependencyService.Get<IFileService>().Save(bytes, result);
+
+            await DisplayAlert("Saved", $"Your picture was saved in {path}", "OK");
         }
 
         private async void SearchUserMedia()
