@@ -29,11 +29,6 @@ namespace Best9Instagram
         {
             InitializeComponent();
 
-            foreach (var field in typeof(Color).GetFields(BindingFlags.Static | BindingFlags.Public))
-            {
-                if (field == null || string.IsNullOrEmpty(field.Name))
-                    continue;
-            }
             _images = new List<Image>();
             SetGridImages();
         }
@@ -79,27 +74,13 @@ namespace Best9Instagram
                 Source = ImageSource.FromStream(() => stream)
             };
 
-            var path = FileSystem.AppDataDirectory;
-            path = Path.Combine(path, "Best9Instagram");
-            Directory.CreateDirectory(path);
-
-            var file = Path.Combine(path, "Best9Instagram");
-
-            byte[] bytes = new byte[stream.Length];
-            using(FileStream fs = new FileStream(file, FileMode.OpenOrCreate))
-            {
-                using(stream)
-                {
-                    stream.Read(bytes, 0, (int)stream.Length);
-                }
-                int length = bytes.Length;
-                await fs.WriteAsync(bytes, 0, length);
-            }
-
             string result = await DisplayPromptAsync("Saving...", "Name your picture:");
-            path = DependencyService.Get<IFileService>().Save(bytes, result);
-
-            await DisplayAlert("Saved", $"Your picture was saved in {path}", "OK");
+            using (var ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                DependencyService.Get<IFileService>().Save(ms.ToArray(), result);
+            }
+            await DisplayAlert("Saved", $"Your picture was saved in your internal storage.", "OK");
         }
 
         private async void SearchUserMedia()
