@@ -17,8 +17,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.ColumnSpan="3" Text="Status" HorizontalOptions="CenterAndExpand" x:Name="Status"/>
-            <Entry Grid.Row="1" x:Name="Username"/>
-            <Entry Grid.Row="1" Grid.Column="1" IsPassword="True" Text="" x:Name="Password"/>
+            <Entry Grid.Row="1" x:Name="Username" Text="dawnkeebals9004"/>
+            <Entry Grid.Row="1" Grid.Column="1" IsPassword="True" Text="horunge666" x:Name="Password"/>
             <Button Grid.Row="1" Grid.Column="2" Text="Log in" Clicked="LogIn_Clicked" x:Name="LoginButton"/>
             <Button Grid.Row="2" Grid.ColumnSpan="3" Text="Save" Clicked="Screenshot_Clicked"/>
             <StackLayout Grid.Row="3" Grid.ColumnSpan="3" x:Name="StackLayoutImages">

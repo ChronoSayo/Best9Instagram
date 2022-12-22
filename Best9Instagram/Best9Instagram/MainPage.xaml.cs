@@ -51,6 +51,16 @@ namespace Best9Instagram
                 delay.Enable();
                 if (!loginResult.Succeeded)
                 {
+                    if(loginResult.Value == InstaLoginResult.ChallengeRequired)
+                    {
+                        await _api.GetLoggedInChallengeDataInfoAsync();
+                        var accept = await _api.AcceptChallengeAsync();
+                        if(!accept.Succeeded)
+                        {
+                            StatusText = "Challenge not succeeded. Unable to login.";
+                            return;
+                        }
+                    }
                     StatusText = "Unable to login.";
                     return;
                 }
